@@ -1,19 +1,10 @@
 ############################################################
 ## TWO-STAGE NESTED CV (Outer 5-fold, Inner 3-fold)
 ## + ROBUST PCA / SPCA / IPCA
-## + STRONGER AUTOENCODER / HYBRIDS
-## + HPC SAFE (clear_session + tryCatch)
-## + IPCA diagnostics
+## + AUTOENCODER / HYBRIDS
 ## + Confusion matrices (Sub.population and D0)
-## + IMPORTANT FIX: standardize embeddings by TRAIN
-##
-## Examples:
-##   Rscript --vanilla nested_job_fixed.R --analysis MAIN_no_ADMIX --method AE
-##   Rscript --vanilla nested_job_fixed.R --analysis SUPP_with_ADMIX --method SPCA
-##   Rscript --vanilla nested_job_fixed.R --analysis MAIN_no_ADMIX --method PCA-AE
-##
-## Confusion once (no CV):
-##   Rscript --vanilla nested_job_fixed.R --analysis MAIN_no_ADMIX --method AE --confusion_once TRUE
+## + Confusion once (no CV):
+
 ############################################################
 
 rm(list = ls(all = TRUE))
@@ -23,7 +14,7 @@ options(stringsAsFactors = FALSE)
 # =========================
 # 0) SETUP
 # =========================
-workdir <- "/blue/munoz/cazevedo/2026/BBP_Simulation/Test"
+workdir <- "xxxx"
 setwd(workdir)
 
 required_packages <- c(
@@ -1195,9 +1186,3 @@ if (CONFUSION_ONCE) {
   )
 }
 
-cat("\nNOTE:\n")
-cat("mixOmics::spca() is Sparse PCA (sPCA), NOT supervised PCA.\n")
-cat("SPCA/IPCA robustness was improved with sanitize_train_val() + tryCatch().\n")
-cat("AE was strengthened: no BatchNorm, lower regularization, larger bottleneck, bigger hidden layers, Huber loss.\n")
-cat("The key clustering fix is scale_by_train() before distance/clustering.\n")
-cat("CUDA warnings are OK on CPU nodes.\n\n")
